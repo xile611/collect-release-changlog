@@ -55,7 +55,10 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
+          folders: ./changlog
+          langs: en,zh
+          tag_name: v1.0.0
+          file_name: changlog.md
 
       - name: Print Output
         id: output
