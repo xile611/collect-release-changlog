@@ -1,3 +1,13 @@
+## v0.0.4
+* Release Time: 2023-12-19T10:06:42Z
+
+### fix
+
+* fix: fix ymls
+
+
+[more detail aboutv0.0.4](https://api.github.com/repos/xile611/collect-release-changelog/releases/tags/v0.0.4)
+
 ## v0.0.2
 ## fix
 
