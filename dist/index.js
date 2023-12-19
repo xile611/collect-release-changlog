@@ -28914,15 +28914,22 @@ function wrappy (fn, cb) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getFiles = void 0;
 const path_1 = __nccwpck_require__(1017);
+const fs_1 = __nccwpck_require__(7147);
 const getFiles = (options) => {
     let fileName = options.fileName ?? options.tag;
     if (!fileName.includes('.md')) {
         fileName = `${fileName}.md`;
     }
+    if (!(0, fs_1.existsSync)(options.folder)) {
+        (0, fs_1.mkdirSync)(options.folder);
+    }
     if (options.langs) {
         const langs = options.langs.split(',');
         const res = [];
         for (const lang of langs) {
+            if (!(0, fs_1.existsSync)((0, path_1.join)(options.folder, lang))) {
+                (0, fs_1.mkdirSync)((0, path_1.join)(options.folder, lang));
+            }
             res.push(`${(0, path_1.join)(options.folder, lang, fileName)}`);
         }
     }
@@ -29064,7 +29071,7 @@ async function initChangelog(file) {
         return true;
     }
     catch (error) {
-        core.error(`Error reading the file: ${file}
+        core.error(`Error to initialize the file: ${file}
       ${error}
     `);
         return false;
@@ -29086,7 +29093,7 @@ ${data}
         return true;
     }
     catch (error) {
-        core.error(`Error reading the file: ${file}
+        core.error(`Error to append changelog to the file: ${file}
       ${error}
     `);
         return false;
