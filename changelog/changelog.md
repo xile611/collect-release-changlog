@@ -1,3 +1,14 @@
+## v0.0.7
+* Release Time: 2023-12-19T10:36:32Z
+
+### fix
+
+* fix the format of markdown
+
+
+
+[more detail about v0.0.7](https://github.com/xile611/collect-release-changelog/releases/tag/v0.0.7)
+
 ## v0.0.6
 * Release Time: 2023-12-19T10:26:52Z
 
