@@ -37,7 +37,7 @@ jobs:
         uses: super-linter/super-linter/slim@v5
         env:
           DEFAULT_BRANCH: main
-          EXCLUDED_DIRECTORIES: 'dist, changelog'
+          FILTER_REGEX_EXCLUDE: dist/**/*
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TYPESCRIPT_DEFAULT_STYLE: prettier
           VALIDATE_ALL_CODEBASE: true
