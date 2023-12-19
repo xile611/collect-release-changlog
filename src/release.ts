@@ -50,6 +50,8 @@ function formatReleaseMarkdown(
     return `**${title}**`
   })
 
+  output = output.replaceAll(/(\n{2,})/g, '\n\n')
+
   return output
 }
 
@@ -85,7 +87,7 @@ async function initChangelog(file: string): Promise<boolean> {
     bodyStr = formatReleaseMarkdown(release.body)
 
     if (bodyStr) {
-      changelog += `# ${release.tag_name}\n${release.published_at?.slice(
+      changelog += `# ${release.tag_name}\n\n${release.published_at?.slice(
         0,
         10
       )}\n\n${bodyStr}\n\n[more detail about ${release.tag_name}](${
@@ -117,7 +119,7 @@ async function appendChangelog(file: string, tag: string): Promise<boolean> {
 
     writeFileSync(
       file,
-      `# ${release.data.tag_name}\n${release.data.published_at?.slice(
+      `# ${release.data.tag_name}\n\n${release.data.published_at?.slice(
         0,
         10
       )}\n\n${formatReleaseMarkdown(release.data.body)}\n\n[more detail about ${

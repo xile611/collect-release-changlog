@@ -32345,6 +32345,7 @@ function formatReleaseMarkdown(releaseMarkdown) {
     output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
         return `**${title}**`;
     });
+    output = output.replaceAll(/(\n{2,})/g, '\n\n');
     return output;
 }
 function sortReleases(data) {
@@ -32370,7 +32371,7 @@ async function initChangelog(file) {
     for (const release of releaseData) {
         bodyStr = formatReleaseMarkdown(release.body);
         if (bodyStr) {
-            changelog += `# ${release.tag_name}\n${release.published_at?.slice(0, 10)}\n\n${bodyStr}\n\n[more detail about ${release.tag_name}](${release.html_url})\n\n`;
+            changelog += `# ${release.tag_name}\n\n${release.published_at?.slice(0, 10)}\n\n${bodyStr}\n\n[more detail about ${release.tag_name}](${release.html_url})\n\n`;
         }
     }
     try {
@@ -32391,7 +32392,7 @@ async function appendChangelog(file, tag) {
     const release = await octokit.rest.repos.getReleaseByTag({ owner, repo, tag });
     try {
         const data = (0, fs_1.readFileSync)(file, 'utf8');
-        (0, fs_1.writeFileSync)(file, `# ${release.data.tag_name}\n${release.data.published_at?.slice(0, 10)}\n\n${formatReleaseMarkdown(release.data.body)}\n\n[more detail about ${release.data.tag_name}](${release.data.html_url})\n\n${data}`);
+        (0, fs_1.writeFileSync)(file, `# ${release.data.tag_name}\n\n${release.data.published_at?.slice(0, 10)}\n\n${formatReleaseMarkdown(release.data.body)}\n\n[more detail about ${release.data.tag_name}](${release.data.html_url})\n\n${data}`);
         return true;
     }
     catch (error) {
