@@ -39,8 +39,8 @@ jobs:
         uses: dustinirving/create-pr@v1.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: '[Auto changlod]'
+          title: '[Auto changlog]'
           base: main
           head: 'docs/generate-changelog-${{  github.event.release.tag_name }}'
-          labels: release
+          labels: changelog
           body: 'update changelog of ${{  github.event.release.tag_name }}'
