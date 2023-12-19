@@ -1,3 +1,13 @@
+# v0.0.9
+
+2023-12-19
+
+**fix**
+
+* fix: remove empty line in changelog
+
+[more detail about v0.0.9](https://github.com/xile611/collect-release-changelog/releases/tag/v0.0.9)
+
 # v0.0.8
 2023-12-19
 
