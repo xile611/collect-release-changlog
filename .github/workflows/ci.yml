@@ -56,11 +56,11 @@ jobs:
         uses: ./
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          folder: ./changlog
+          folder: ./changelog
           langs: en,zh
-          tag_name: v1.0.0
-          file_name: changlog.md
+          tag_name: v0.0.0
+          file_name: changelog.md
 
       - name: Print Output
         id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+        run: echo "${{ steps.test-action.outputs.changed_files }}"

@@ -22,10 +22,10 @@ jobs:
         uses: ./
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          folder: ./changlog
+          folder: ./changelog
           langs: en,zh
           tag_name: github.event.release.tag_name
-          file_name: changlog.md
+          file_name: changelog.md
 
       - name: Create branch
         run: |
@@ -39,8 +39,8 @@ jobs:
         uses: dustinirving/create-pr@v1.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: '[Auto changlod]'
+          title: '[Auto changelog]'
           base: main
           head: 'docs/generate-changelog-${{  github.event.release.tag_name }}'
-          labels: release
+          labels: changelog
           body: 'update changelog of ${{  github.event.release.tag_name }}'
