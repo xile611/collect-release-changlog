@@ -56,10 +56,10 @@ jobs:
         uses: ./
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          folder: ./changlog
+          folder: ./changelog
           langs: en,zh
           tag_name: v0.0.0
-          file_name: changlog.md
+          file_name: changelog.md
 
       - name: Print Output
         id: output
