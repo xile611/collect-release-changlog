@@ -40,7 +40,7 @@ async function initChangelog(file: string): Promise<boolean> {
     writeFileSync(file, changelog)
     return true
   } catch (error) {
-    core.error(`Error reading the file: ${file}
+    core.error(`Error to initialize the file: ${file}
       ${error}
     `)
 
@@ -68,7 +68,7 @@ ${data}
 
     return true
   } catch (error) {
-    core.error(`Error reading the file: ${file}
+    core.error(`Error to append changelog to the file: ${file}
       ${error}
     `)
 
