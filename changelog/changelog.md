@@ -1,3 +1,14 @@
+# v0.0.8
+2023-12-19
+
+**🐛 fix**
+
+* fix: fix the format of  changlog
+
+
+
+[more detail about v0.0.8](https://github.com/xile611/collect-release-changelog/releases/tag/v0.0.8)
+
 ## v0.0.7
 * Release Time: 2023-12-19T10:36:32Z
 
