@@ -114,7 +114,7 @@ async function appendChangelog(file: string, tag: string): Promise<boolean> {
         release.data.published_at
       }\n\n${formatReleaseMarkdown(release.data.body)}\n[more detail about${
         release.data.tag_name
-      }](${release.url})\n\n${data}`
+      }](${release.data.url})\n\n${data}`
     )
 
     return true
