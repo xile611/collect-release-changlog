@@ -1,3 +1,13 @@
+## v0.0.5
+* Release Time: 2023-12-19T10:21:42Z
+
+### fix
+
+* fix: fix the url of release
+
+
+[more detail aboutv0.0.5](https://api.github.com/repos/xile611/collect-release-changelog/releases/134445608)
+
 ## v0.0.2
 ## fix
 
