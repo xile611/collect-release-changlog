@@ -17,13 +17,13 @@ jobs:
           git config user.name ${{ github.actor }}
           git config user.email ${{ github.actor }}@users.noreply.github.com
 
-      - name: Test Local Action
-        id: test-action
+      - name: generate changelog
+        id: generate-changelog
         uses: ./
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           folder: ./changelog
-          langs: en,zh
+          langs: 'en,zh'
           tag_name: ${{github.event.release.tag_name}}
           file_name: changelog.md
 
