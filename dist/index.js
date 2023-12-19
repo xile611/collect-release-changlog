@@ -32368,7 +32368,7 @@ async function initChangelog(file) {
     for (const release of releaseData) {
         bodyStr = formatReleaseMarkdown(release.body);
         if (bodyStr) {
-            changelog += `## ${release.tag_name}\n* Release Time: ${release.published_at}\n\n${bodyStr}\n[more detail about${release.tag_name}](${release.html_url})\n\n`;
+            changelog += `## ${release.tag_name}\n* Release Time: ${release.published_at}\n\n${bodyStr}\n\n[more detail about ${release.tag_name}](${release.html_url})\n\n`;
         }
     }
     try {
@@ -32389,7 +32389,7 @@ async function appendChangelog(file, tag) {
     const release = await octokit.rest.repos.getReleaseByTag({ owner, repo, tag });
     try {
         const data = (0, fs_1.readFileSync)(file, 'utf8');
-        (0, fs_1.writeFileSync)(file, `## ${release.data.tag_name}\n* Release Time: ${release.data.published_at}\n\n${formatReleaseMarkdown(release.data.body)}\n[more detail about${release.data.tag_name}](${release.data.html_url})\n\n${data}`);
+        (0, fs_1.writeFileSync)(file, `## ${release.data.tag_name}\n* Release Time: ${release.data.published_at}\n\n${formatReleaseMarkdown(release.data.body)}\n\n[more detail about ${release.data.tag_name}](${release.data.html_url})\n\n${data}`);
         return true;
     }
     catch (error) {
