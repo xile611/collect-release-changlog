@@ -58,7 +58,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           folder: ./changlog
           langs: en,zh
-          tag_name: v1.0.0
+          tag_name: v0.0.0
           file_name: changlog.md
 
       - name: Print Output
