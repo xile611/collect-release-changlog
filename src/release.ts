@@ -24,6 +24,30 @@ export async function updateOrAppendChanglog(
   return result
 }
 
+function formatReleaseMarkdown(releaseMarkdown: string | null | undefined) {
+  if (!releaseMarkdown) {
+    return ''
+  }
+
+  let output = releaseMarkdown
+
+  const changedPrIndex = releaseMarkdown.indexOf(`## What's Changed`)
+
+  if (changedPrIndex > 0) {
+    output = releaseMarkdown.slice(0, changedPrIndex)
+  } else {
+    const newContributorsIndex = releaseMarkdown.indexOf(`## New Contributors`)
+
+    if (newContributorsIndex > 0) {
+      output = releaseMarkdown.slice(0, newContributorsIndex)
+    }
+  }
+
+  output = output.replace(/##(\s)+/g, '### ')
+
+  return output
+}
+
 async function initChangelog(file: string): Promise<boolean> {
   const githubToken = core.getInput('token')
   const octokit = github.getOctokit(githubToken)
@@ -31,9 +55,14 @@ async function initChangelog(file: string): Promise<boolean> {
   const releases = await octokit.rest.repos.listReleases({ owner, repo })
 
   let changelog = ''
+  let bodyStr = ''
 
   for (const release of releases.data) {
-    changelog += `## ${release.tag_name}\n${release.body}\n\n`
+    bodyStr = formatReleaseMarkdown(release.body)
+
+    if (bodyStr) {
+      changelog += `## ${release.tag_name}\n\n${bodyStr}\n\n`
+    }
   }
 
   try {
@@ -58,12 +87,9 @@ async function appendChangelog(file: string, tag: string): Promise<boolean> {
     const data = readFileSync(file, 'utf8')
     writeFileSync(
       file,
-      `
-
-${release.data.body}
-
-${data}
-    `
+      `## ${release.data.tag_name}\n\n${formatReleaseMarkdown(
+        release.data.body
+      )}\n\n${data}`
     )
 
     return true
