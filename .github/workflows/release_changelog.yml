@@ -24,7 +24,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           folder: ./changelog
           langs: en,zh
-          tag_name: github.event.release.tag_name
+          tag_name: ${{github.event.release.tag_name}}
           file_name: changelog.md
 
       - name: Create branch
