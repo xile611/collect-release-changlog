@@ -2,13 +2,13 @@
 
 The following parameters are supported
 
-| name      | description                                | required |
-| --------- | ------------------------------------------ | -------- |
-| token     | the token of github                        | true     |
-| folder    | The folder of changelog                    | false    |
-| langs     | the langs of changelog                     | false    |
-| file_name | the file name to update changelog markdown | false    |
-| tag_name  | the tag name of release                    | false    |
+| name      | description                               | required |
+| --------- | ----------------------------------------- | -------- |
+| token     | the token of GitHub                       | true     |
+| folder    | The folder of changelog                   | false    |
+| langs     | the langs of changelog                    | false    |
+| file_name | the filename to update changelog Markdown | false    |
+| tag_name  | the tag name of release                   | false    |
 
 ## development
 

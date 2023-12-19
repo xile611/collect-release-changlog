@@ -55,6 +55,7 @@ jobs:
         id: test-action
         uses: ./
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           folders: ./changlog
           langs: en,zh
           tag_name: v1.0.0
