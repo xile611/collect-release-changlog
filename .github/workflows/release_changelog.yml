@@ -30,6 +30,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: '[Auto changlod]'
           base: main
-          head: ${{ github.ref_name }}
+          head: 'docs/generate-changelog-${{  github.event.release.tag_name }}'
           labels: release
           body: 'update changelog of ${{  github.event.release.tag_name }}'

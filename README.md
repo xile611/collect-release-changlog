@@ -1,3 +1,5 @@
+# collect-release-changlog
+
 ## Usage
 
 The following parameters are supported
@@ -12,21 +14,19 @@ The following parameters are supported
 
 ## development
 
-> actions.
-
-1.  Install the dependencies
+- Install the dependencies
 
 ```bash
 npm install
 ```
 
-2.  Package the TypeScript for distribution
+- Package the TypeScript for distribution
 
 ```bash
 npm run bundle
 ```
 
-3.  Run the tests
+- Run the tests
 
 ```bash
 $ npm test
@@ -39,8 +39,8 @@ PASS  ./index.test.js
 ...
 ```
 
-4. format and test and build the action
+- format and test and build the action
 
-   ```bash
-   npm run all
-   ```
+  ```bash
+  npm run all
+  ```
