@@ -13,6 +13,9 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
+      - run: |
+          git config user.name ${{ github.actor }}
+          git config user.email ${{ github.actor }}@users.noreply.github.com
 
       - name: Test Local Action
         id: test-action
@@ -23,6 +26,14 @@ jobs:
           langs: en,zh
           tag_name: github.event.release.tag_name
           file_name: changlog.md
+
+      - name: Create branch
+        run: |
+          git checkout -b docs/generate-changelog-${{  github.event.release.tag_name }}
+          # Make any necessary changes
+          git add .
+          git commit -m "docs: generate changelog of release ${{  github.event.release.tag_name }}"
+          git push origin docs/generate-changelog-${{  github.event.release.tag_name }}
 
       - name: Create Pull Request
         uses: dustinirving/create-pr@v1.0.2
