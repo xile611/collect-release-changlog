@@ -1,3 +1,10 @@
+## v0.0.6
+* Release Time: 2023-12-19T10:26:52Z
+
+### fix
+* fix the html_url of changelog
+[more detail aboutv0.0.6](https://github.com/xile611/collect-release-changelog/releases/tag/v0.0.6)
+
 ## v0.0.5
 * Release Time: 2023-12-19T10:21:42Z
 
