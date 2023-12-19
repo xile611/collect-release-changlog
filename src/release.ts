@@ -46,7 +46,9 @@ function formatReleaseMarkdown(
     }
   }
 
-  output = output.replace(/##(\s)+/g, '### ')
+  output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
+    return `**${title}**`
+  })
 
   return output
 }
@@ -83,7 +85,12 @@ async function initChangelog(file: string): Promise<boolean> {
     bodyStr = formatReleaseMarkdown(release.body)
 
     if (bodyStr) {
-      changelog += `## ${release.tag_name}\n* Release Time: ${release.published_at}\n\n${bodyStr}\n\n[more detail about ${release.tag_name}](${release.html_url})\n\n`
+      changelog += `# ${release.tag_name}\n${release.published_at?.slice(
+        0,
+        10
+      )}\n\n${bodyStr}\n\n[more detail about ${release.tag_name}](${
+        release.html_url
+      })\n\n`
     }
   }
 
@@ -110,9 +117,10 @@ async function appendChangelog(file: string, tag: string): Promise<boolean> {
 
     writeFileSync(
       file,
-      `## ${release.data.tag_name}\n* Release Time: ${
-        release.data.published_at
-      }\n\n${formatReleaseMarkdown(release.data.body)}\n\n[more detail about ${
+      `# ${release.data.tag_name}\n${release.data.published_at?.slice(
+        0,
+        10
+      )}\n\n${formatReleaseMarkdown(release.data.body)}\n\n[more detail about ${
         release.data.tag_name
       }](${release.data.html_url})\n\n${data}`
     )
