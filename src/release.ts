@@ -68,8 +68,8 @@ function sortReleases<T extends { tag_name: string }>(data: T[]): T[] {
 
   filterData.sort((a: T, b: T) => {
     return semver.gt(a.tag_name.replace('v', ''), b.tag_name.replace('v', ''))
-      ? 1
-      : -1
+      ? -1
+      : 1
   })
 
   return filterData

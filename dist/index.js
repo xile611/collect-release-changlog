@@ -32400,8 +32400,8 @@ function sortReleases(data) {
     const filterData = data.filter(entry => semver_1.default.valid(entry.tag_name.replace('v', '')));
     filterData.sort((a, b) => {
         return semver_1.default.gt(a.tag_name.replace('v', ''), b.tag_name.replace('v', ''))
-            ? 1
-            : -1;
+            ? -1
+            : 1;
     });
     return filterData;
 }
