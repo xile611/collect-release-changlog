@@ -25,7 +25,7 @@ export async function run(): Promise<void> {
     if (tag) {
       const files = getFiles({ folder, langs, fileName, tag })
 
-      const result = await updateOrAppendChanglog(files, tag)
+      const result = await updateOrAppendChanglog(files)
 
       core.setOutput('changed_files', result.join(','))
     }
