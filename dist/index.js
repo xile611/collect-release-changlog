@@ -32172,6 +32172,45 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 2516:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getCommitType = void 0;
+const getCommitType = (type, lang) => {
+    if (lang === 'zh') {
+        switch (type) {
+            case 'feat':
+                return '新增功能';
+            case 'fix':
+                return '功能修复';
+            case 'docs':
+                return '文档更新';
+            case 'style':
+                return '代码样式';
+            case 'refactor':
+                return '功能重构';
+            case 'perf':
+                return '性能优化';
+            case 'test':
+                return '单元测试';
+            case 'chore':
+                return '项目配置';
+            case 'revert':
+                return '功能回退';
+            default:
+                return '其他';
+        }
+    }
+    return type;
+};
+exports.getCommitType = getCommitType;
+
+
+/***/ }),
+
 /***/ 7255:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -32196,10 +32235,15 @@ const getFiles = (options) => {
             if (!(0, fs_1.existsSync)((0, path_1.join)(options.folder, lang))) {
                 (0, fs_1.mkdirSync)((0, path_1.join)(options.folder, lang));
             }
-            res.push(`${(0, path_1.join)(options.folder, lang, fileName)}`);
+            res.push({
+                file: `${(0, path_1.join)(options.folder, lang, fileName)}`,
+                lang,
+                tag: options.tag
+            });
         }
+        return res;
     }
-    return [`${(0, path_1.join)(options.folder, fileName)}`];
+    return [{ file: `${(0, path_1.join)(options.folder, fileName)}`, tag: options.tag }];
 };
 exports.getFiles = getFiles;
 
@@ -32258,7 +32302,7 @@ async function run() {
         }
         if (tag) {
             const files = (0, files_1.getFiles)({ folder, langs, fileName, tag });
-            const result = await (0, release_1.updateOrAppendChanglog)(files, tag);
+            const result = await (0, release_1.updateOrAppendChanglog)(files);
             core.setOutput('changed_files', result.join(','));
         }
     }
@@ -32310,24 +32354,25 @@ const github = __importStar(__nccwpck_require__(5438));
 const core = __importStar(__nccwpck_require__(2186));
 const fs_1 = __nccwpck_require__(7147);
 const semver_1 = __importDefault(__nccwpck_require__(1383));
-async function updateOrAppendChanglog(files, tag) {
+const commit_types_1 = __nccwpck_require__(2516);
+async function updateOrAppendChanglog(files) {
     const result = [];
     let res;
     for (const file of files) {
-        if ((0, fs_1.existsSync)(file)) {
-            res = await appendChangelog(file, tag);
+        if ((0, fs_1.existsSync)(file.file)) {
+            res = await appendChangelog(file);
         }
         else {
             res = await initChangelog(file);
         }
         if (res) {
-            result.push(file);
+            result.push(file.file);
         }
     }
     return result;
 }
 exports.updateOrAppendChanglog = updateOrAppendChanglog;
-function formatReleaseMarkdown(releaseMarkdown) {
+function formatReleaseMarkdown(releaseMarkdown, lang) {
     if (!releaseMarkdown) {
         return '';
     }
@@ -32343,7 +32388,7 @@ function formatReleaseMarkdown(releaseMarkdown) {
         }
     }
     output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
-        return `**${title}**`;
+        return `**${(0, commit_types_1.getCommitType)(title, lang)}**`;
     });
     output = output.replaceAll(/(\n{2,})/g, '\n\n');
     return output;
@@ -32369,34 +32414,38 @@ async function initChangelog(file) {
     let changelog = '';
     let bodyStr = '';
     for (const release of releaseData) {
-        bodyStr = formatReleaseMarkdown(release.body);
+        bodyStr = formatReleaseMarkdown(release.body, file.lang);
         if (bodyStr) {
             changelog += `# ${release.tag_name}\n\n${release.published_at?.slice(0, 10)}\n\n${bodyStr}\n\n[more detail about ${release.tag_name}](${release.html_url})\n\n`;
         }
     }
     try {
-        (0, fs_1.writeFileSync)(file, changelog);
+        (0, fs_1.writeFileSync)(file.file, changelog);
         return true;
     }
     catch (error) {
-        core.error(`Error to initialize the file: ${file}
+        core.error(`Error to initialize the file: ${file.file}
       ${error}
     `);
         return false;
     }
 }
-async function appendChangelog(file, tag) {
+async function appendChangelog(file) {
     const githubToken = core.getInput('token');
     const octokit = github.getOctokit(githubToken);
     const { owner, repo } = github.context.repo;
-    const release = await octokit.rest.repos.getReleaseByTag({ owner, repo, tag });
+    const release = await octokit.rest.repos.getReleaseByTag({
+        owner,
+        repo,
+        tag: file.tag
+    });
     try {
-        const data = (0, fs_1.readFileSync)(file, 'utf8');
-        (0, fs_1.writeFileSync)(file, `# ${release.data.tag_name}\n\n${release.data.published_at?.slice(0, 10)}\n\n${formatReleaseMarkdown(release.data.body)}\n\n[more detail about ${release.data.tag_name}](${release.data.html_url})\n\n${data}`);
+        const data = (0, fs_1.readFileSync)(file.file, 'utf8');
+        (0, fs_1.writeFileSync)(file.file, `# ${release.data.tag_name}\n\n${release.data.published_at?.slice(0, 10)}\n\n${formatReleaseMarkdown(release.data.body, file.lang)}\n\n[more detail about ${release.data.tag_name}](${release.data.html_url})\n\n${data}`);
         return true;
     }
     catch (error) {
-        core.error(`Error to append changelog to the file: ${file}
+        core.error(`Error to append changelog to the file: ${file.file}
       ${error}
     `);
         return false;
