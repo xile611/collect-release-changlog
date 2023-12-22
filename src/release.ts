@@ -49,7 +49,7 @@ function formatReleaseMarkdown(
   }
 
   output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
-    return `**${getCommitType(title, lang)}**`
+    return `**${getCommitType(title.trim(), lang)}**`
   })
 
   output = output.replaceAll(/(\n{2,})/g, '\n\n')
