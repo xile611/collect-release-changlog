@@ -32172,6 +32172,39 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 2516:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getCommitType = void 0;
+const locales_1 = __nccwpck_require__(4721);
+const types = [
+    'feat',
+    'fix',
+    'docs',
+    'style',
+    'refactor',
+    'perf',
+    'test',
+    'chore',
+    'revert',
+    'other'
+];
+const getCommitType = (text, lang) => {
+    for (const type of types) {
+        if (text.includes(type)) {
+            return text.replace(type, (0, locales_1.getLocaleByKey)(type, lang));
+        }
+    }
+    return text;
+};
+exports.getCommitType = getCommitType;
+
+
+/***/ }),
+
 /***/ 7255:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -32359,6 +32392,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const fs_1 = __nccwpck_require__(7147);
 const semver_1 = __importDefault(__nccwpck_require__(1383));
 const locales_1 = __nccwpck_require__(4721);
+const commit_types_1 = __nccwpck_require__(2516);
 async function updateOrAppendChanglog(files) {
     const result = [];
     let res;
@@ -32393,7 +32427,7 @@ function formatReleaseMarkdown(releaseMarkdown, lang) {
     }
     // 处理标题
     output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
-        return `**${(0, locales_1.getLocaleByKey)(title.trim(), lang)}**`;
+        return `**${(0, commit_types_1.getCommitType)(title.trim(), lang)}**`;
     });
     // 处理 issue
     const { owner, repo } = github.context.repo;
