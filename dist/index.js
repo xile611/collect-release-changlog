@@ -32172,53 +32172,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 2516:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getCommitType = void 0;
-const getCommitType = (type, lang) => {
-    if (lang === 'zh') {
-        if (type.includes('feat')) {
-            return type.replace('feat', '新增功能');
-        }
-        if (type.includes('fix')) {
-            return type.replace('fix', '功能修复');
-        }
-        if (type.includes('docs')) {
-            return type.replace('docs', '文档更新');
-        }
-        if (type.includes('style')) {
-            return type.replace('style', '代码样式');
-        }
-        if (type.includes('refactor')) {
-            return type.replace('refactor', '功能重构');
-        }
-        if (type.includes('perf')) {
-            return type.replace('perf', '性能优化');
-        }
-        if (type.includes('test')) {
-            return type.replace('test', '单元测试');
-        }
-        if (type.includes('chore')) {
-            return type.replace('chore', '项目配置');
-        }
-        if (type.includes('revert')) {
-            return type.replace('revert', '功能回退');
-        }
-        if (type.includes('other')) {
-            return type.replace('other', '其他');
-        }
-    }
-    return type;
-};
-exports.getCommitType = getCommitType;
-
-
-/***/ }),
-
 /***/ 7255:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -32254,6 +32207,49 @@ const getFiles = (options) => {
     return [{ file: `${(0, path_1.join)(options.folder, fileName)}`, tag: options.tag }];
 };
 exports.getFiles = getFiles;
+
+
+/***/ }),
+
+/***/ 4721:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getLocaleByKey = exports.locales = void 0;
+exports.locales = {
+    en: {
+        feat: 'New feature',
+        fix: 'Bug fix',
+        docs: 'Site / documentation update',
+        style: 'Code style optimization',
+        refactor: 'Refactor',
+        perf: 'Performance optimization',
+        test: 'Test Case',
+        chore: 'Configuration releated',
+        revert: 'revert',
+        other: 'other',
+        more_detail_about: 'more detail about'
+    },
+    zh: {
+        feat: '新增功能',
+        fix: '功能修复',
+        docs: '文档更新',
+        style: '代码样式',
+        refactor: '功能重构',
+        perf: '性能优化',
+        test: '单元测试',
+        chore: '项目配置',
+        revert: '功能回退',
+        other: '其他',
+        more_detail_about: '更多详情请查看'
+    }
+};
+const getLocaleByKey = (key, locale = 'en') => {
+    return exports.locales[locale] ? exports.locales[locale][key] : key;
+};
+exports.getLocaleByKey = getLocaleByKey;
 
 
 /***/ }),
@@ -32362,7 +32358,7 @@ const github = __importStar(__nccwpck_require__(5438));
 const core = __importStar(__nccwpck_require__(2186));
 const fs_1 = __nccwpck_require__(7147);
 const semver_1 = __importDefault(__nccwpck_require__(1383));
-const commit_types_1 = __nccwpck_require__(2516);
+const locales_1 = __nccwpck_require__(4721);
 async function updateOrAppendChanglog(files) {
     const result = [];
     let res;
@@ -32397,7 +32393,7 @@ function formatReleaseMarkdown(releaseMarkdown, lang) {
     }
     // 处理标题
     output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
-        return `**${(0, commit_types_1.getCommitType)(title.trim(), lang)}**`;
+        return `**${(0, locales_1.getLocaleByKey)(title.trim(), lang)}**`;
     });
     // 处理 issue
     const { owner, repo } = github.context.repo;
@@ -32431,7 +32427,7 @@ async function initChangelog(file) {
     for (const release of releaseData) {
         bodyStr = formatReleaseMarkdown(release.body, file.lang);
         if (bodyStr) {
-            changelog += `# ${release.tag_name}\n\n${release.published_at?.slice(0, 10)}\n\n${bodyStr}\n\n[more detail about ${release.tag_name}](${release.html_url})\n\n`;
+            changelog += `# ${release.tag_name}\n\n${release.published_at?.slice(0, 10)}\n\n${bodyStr}\n\n[${(0, locales_1.getLocaleByKey)('more_detail_about', file.lang)} ${release.tag_name}](${release.html_url})\n\n`;
         }
     }
     try {
@@ -32456,7 +32452,7 @@ async function appendChangelog(file) {
     });
     try {
         const data = (0, fs_1.readFileSync)(file.file, 'utf8');
-        (0, fs_1.writeFileSync)(file.file, `# ${release.data.tag_name}\n\n${release.data.published_at?.slice(0, 10)}\n\n${formatReleaseMarkdown(release.data.body, file.lang)}\n\n[more detail about ${release.data.tag_name}](${release.data.html_url})\n\n${data}`);
+        (0, fs_1.writeFileSync)(file.file, `# ${release.data.tag_name}\n\n${release.data.published_at?.slice(0, 10)}\n\n${formatReleaseMarkdown(release.data.body, file.lang)}\n\n[${(0, locales_1.getLocaleByKey)('more_detail_about', file.lang)} ${release.data.tag_name}](${release.data.html_url})\n\n${data}`);
         return true;
     }
     catch (error) {
