@@ -3,7 +3,7 @@ import * as core from '@actions/core'
 import { writeFileSync, readFileSync, existsSync } from 'fs'
 import semver from 'semver'
 import { FileItem } from './interface'
-import { getCommitType } from './commit-types'
+import { getLocaleByKey } from './locales'
 
 export async function updateOrAppendChanglog(
   files: FileItem[]
@@ -50,7 +50,7 @@ function formatReleaseMarkdown(
 
   // 处理标题
   output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
-    return `**${getCommitType(title.trim(), lang)}**`
+    return `**${getLocaleByKey(title.trim(), lang)}**`
   })
 
   // 处理 issue
@@ -101,9 +101,9 @@ async function initChangelog(file: FileItem): Promise<boolean> {
       changelog += `# ${release.tag_name}\n\n${release.published_at?.slice(
         0,
         10
-      )}\n\n${bodyStr}\n\n[more detail about ${release.tag_name}](${
-        release.html_url
-      })\n\n`
+      )}\n\n${bodyStr}\n\n[${getLocaleByKey('more_detail_about', file.lang)} ${
+        release.tag_name
+      }](${release.html_url})\n\n`
     }
   }
 
@@ -140,9 +140,9 @@ async function appendChangelog(file: FileItem): Promise<boolean> {
       )}\n\n${formatReleaseMarkdown(
         release.data.body,
         file.lang
-      )}\n\n[more detail about ${release.data.tag_name}](${
-        release.data.html_url
-      })\n\n${data}`
+      )}\n\n[${getLocaleByKey('more_detail_about', file.lang)} ${
+        release.data.tag_name
+      }](${release.data.html_url})\n\n${data}`
     )
 
     return true
