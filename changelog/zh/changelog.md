@@ -1,3 +1,13 @@
+# v1.0.3
+
+2023-12-27
+
+**新增功能**
+
+* support more locales
+
+[更多详情请查看 v1.0.3](https://github.com/xile611/collect-release-changelog/releases/tag/v1.0.3)
+
 # v1.0.2
 
 2023-12-27
