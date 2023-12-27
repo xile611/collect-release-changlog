@@ -1,3 +1,15 @@
+# v1.0.2
+
+2023-12-27
+
+**功能修复**
+
+* fix: format the changelog about issue number, fix [#27](https://github.com/xile611/collect-release-changelog/issues/27)
+
+
+
+[more detail about v1.0.2](https://github.com/xile611/collect-release-changelog/releases/tag/v1.0.2)
+
 # v1.0.1
 
 2023-12-20
