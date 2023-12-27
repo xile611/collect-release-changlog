@@ -1,3 +1,13 @@
+# v1.0.3
+
+2023-12-27
+
+**New feature**
+
+* support more locales
+
+[more detail about v1.0.3](https://github.com/xile611/collect-release-changelog/releases/tag/v1.0.3)
+
 # v1.0.2
 
 2023-12-27
