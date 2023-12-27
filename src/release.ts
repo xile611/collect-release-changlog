@@ -48,8 +48,17 @@ function formatReleaseMarkdown(
     }
   }
 
+  // 处理标题
   output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
     return `**${getCommitType(title.trim(), lang)}**`
+  })
+
+  // 处理 issue
+  const { owner, repo } = github.context.repo
+  const url = `https://github.com/${owner}/${repo}`
+
+  output = output.replaceAll(/#(\d+)/gm, (match, no) => {
+    return `[${match}](${url}/issues/${no})`
   })
 
   output = output.replaceAll(/(\n{2,})/g, '\n\n')
