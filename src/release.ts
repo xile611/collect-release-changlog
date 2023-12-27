@@ -4,6 +4,7 @@ import { writeFileSync, readFileSync, existsSync } from 'fs'
 import semver from 'semver'
 import { FileItem } from './interface'
 import { getLocaleByKey } from './locales'
+import { getCommitType } from './commit-types'
 
 export async function updateOrAppendChanglog(
   files: FileItem[]
@@ -50,7 +51,7 @@ function formatReleaseMarkdown(
 
   // 处理标题
   output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
-    return `**${getLocaleByKey(title.trim(), lang)}**`
+    return `**${getCommitType(title.trim(), lang)}**`
   })
 
   // 处理 issue
