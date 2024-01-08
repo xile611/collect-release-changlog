@@ -96,10 +96,14 @@ async function initChangelog(file: FileItem): Promise<boolean> {
   let bodyStr = ''
 
   for (const release of releaseData) {
+    if (release.draft || !release.published_at) {
+      continue
+    }
+
     bodyStr = formatReleaseMarkdown(release.body, file.lang)
 
     if (bodyStr) {
-      changelog += `# ${release.tag_name}\n\n${release.published_at?.slice(
+      changelog += `# ${release.tag_name}\n\n${release.published_at.slice(
         0,
         10
       )}\n\n${bodyStr}\n\n[${getLocaleByKey('more_detail_about', file.lang)} ${
