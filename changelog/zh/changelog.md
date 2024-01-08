@@ -1,3 +1,13 @@
+# v1.0.4
+
+2023-12-27
+
+**功能修复**
+
+* fix the bug of parse commit change
+
+[更多详情请查看 v1.0.4](https://github.com/xile611/collect-release-changelog/releases/tag/v1.0.4)
+
 # v1.0.3
 
 2023-12-27

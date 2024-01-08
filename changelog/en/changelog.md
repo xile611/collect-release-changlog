@@ -1,3 +1,13 @@
+# v1.0.4
+
+2023-12-27
+
+**Bug fix**
+
+* fix the bug of parse commit change
+
+[more detail about v1.0.4](https://github.com/xile611/collect-release-changelog/releases/tag/v1.0.4)
+
 # v1.0.3
 
 2023-12-27
