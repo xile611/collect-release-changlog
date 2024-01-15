@@ -32427,7 +32427,7 @@ function formatReleaseMarkdown(releaseMarkdown, lang) {
     }
     // 处理标题
     output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
-        return `**${(0, commit_types_1.getCommitType)(title.trim(), lang)}**`;
+        return `\n**${(0, commit_types_1.getCommitType)(title.trim(), lang)}**\n`;
     });
     // 处理 issue
     const { owner, repo } = github.context.repo;
