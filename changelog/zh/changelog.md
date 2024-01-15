@@ -1,3 +1,23 @@
+# v1.0.5
+
+2024-01-15
+
+
+**功能修复**
+
+
+* fix the format of release string
+
+
+**项目配置**
+
+
+* update the config of project
+
+
+
+[更多详情请查看 v1.0.5](https://github.com/xile611/collect-release-changelog/releases/tag/v1.0.5)
+
 # v1.0.4
 
 2023-12-27
