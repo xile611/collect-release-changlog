@@ -1,3 +1,23 @@
+# v1.0.5
+
+2024-01-15
+
+
+**Bug fix**
+
+
+* fix the format of release string
+
+
+**Configuration releated**
+
+
+* update the config of project
+
+
+
+[more detail about v1.0.5](https://github.com/xile611/collect-release-changelog/releases/tag/v1.0.5)
+
 # v1.0.4
 
 2023-12-27
