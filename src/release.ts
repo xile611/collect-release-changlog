@@ -51,7 +51,7 @@ function formatReleaseMarkdown(
 
   // 处理标题
   output = output.replaceAll(/^##\s(.+)$/gm, (match, title) => {
-    return `**${getCommitType(title.trim(), lang)}**`
+    return `\n**${getCommitType(title.trim(), lang)}**\n`
   })
 
   // 处理 issue
